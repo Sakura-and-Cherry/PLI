@@ -1,0 +1,24 @@
+————Partition Type:	greedy	Lambda:	0.000500	——————
+Total Blocks:	89116
+Greedy Cost:	6120.220598
+Build Time:	13011428
+————Partition Type:	greedy	Lambda:	0.000600	——————
+Total Blocks:	71621
+Greedy Cost:	12750.495622
+Build Time:	11891553
+————Partition Type:	greedy	Lambda:	0.000700	——————
+Total Blocks:	28423
+Greedy Cost:	12171.317224
+Build Time:	10342971
+————Partition Type:	greedy	Lambda:	0.000800	——————
+Total Blocks:	2271
+Greedy Cost:	2634.773492
+Build Time:	8235451
+————Partition Type:	greedy	Lambda:	0.000900	——————
+Total Blocks:	89
+Greedy Cost:	170.553427
+Build Time:	6725636
+————Partition Type:	greedy	Lambda:	0.001000	——————
+Total Blocks:	2
+Greedy Cost:	10.055413
+Build Time:	6255098
