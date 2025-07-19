@@ -1,24 +1,56 @@
 ————Partition Type:	greedy	Lambda:	0.000500	——————
-Total Blocks:	89116
-Greedy Cost:	6120.220598
-Build Time:	13011428
-————Partition Type:	greedy	Lambda:	0.000600	——————
-Total Blocks:	71621
-Greedy Cost:	12750.495622
-Build Time:	11891553
+Scale Factor:	100.000000
+Total Blocks:	70502
+Greedy Cost:	2964.297793
+Build Time:	2363043
+Segments Number:	6521693
+Segments Size:	158059328
+Height:	5
 ————Partition Type:	greedy	Lambda:	0.000700	——————
-Total Blocks:	28423
-Greedy Cost:	12171.317224
-Build Time:	10342971
+Scale Factor:	100.000000
+Total Blocks:	1605
+Greedy Cost:	1991.074469
+Build Time:	1669764
+Segments Number:	295674
+Segments Size:	7161888
+Height:	5
+————Partition Type:	greedy	Lambda:	0.000750	——————
+Scale Factor:	100.000000
+Total Blocks:	163
+Greedy Cost:	372.602528
+Build Time:	1486819
+Segments Number:	35267
+Segments Size:	853832
+Height:	4
+————Partition Type:	greedy	Lambda:	0.000775	——————
+Scale Factor:	100.000000
+Total Blocks:	39
+Greedy Cost:	117.918395
+Build Time:	1413773
+Segments Number:	8710
+Segments Size:	211000
+Height:	4
 ————Partition Type:	greedy	Lambda:	0.000800	——————
-Total Blocks:	2271
-Greedy Cost:	2634.773492
-Build Time:	8235451
+Scale Factor:	100.000000
+Total Blocks:	20
+Greedy Cost:	75.138892
+Build Time:	1411660
+Segments Number:	4580
+Segments Size:	111096
+Height:	4
+————Partition Type:	greedy	Lambda:	0.000850	——————
+Scale Factor:	100.000000
+Total Blocks:	4
+Greedy Cost:	19.664110
+Build Time:	1370042
+Segments Number:	647
+Segments Size:	15864
+Height:	3
 ————Partition Type:	greedy	Lambda:	0.000900	——————
-Total Blocks:	89
-Greedy Cost:	170.553427
-Build Time:	6725636
-————Partition Type:	greedy	Lambda:	0.001000	——————
+Scale Factor:	100.000000
 Total Blocks:	2
-Greedy Cost:	10.055413
-Build Time:	6255098
+Greedy Cost:	9.895235
+Build Time:	1350203
+Segments Number:	158
+Segments Size:	4048
+Height:	3

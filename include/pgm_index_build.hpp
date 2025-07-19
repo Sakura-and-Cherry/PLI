@@ -52,7 +52,10 @@ namespace pgm_sequence {
 
         void stats_model() {
             // 输出pgm的高度，线段数和总大小
-            std::cout << "PGM Index Stats:\t" << "Height:\t" << index.height() << "\tSegments Count:\t" << index.segments_count() << "\tSize in Bytes:\t" << index.size_in_bytes() << "\tFirst Key:\t" << index.first_key << "\tTotal Elements:\t" << index.n << std::endl;
+            // std::cout << "PGM Index Stats:\t" << "Height:\t" << index.height() << "\tSegments Count:\t" << index.segments_count() << "\tSize in Bytes:\t" << index.size_in_bytes() << "\tFirst Key:\t" << index.first_key << "\tTotal Elements:\t" << index.n << std::endl;
+            output_message("Segments Number:\t" + std::to_string(index.segments_count()));
+            output_message("Segments Size:\t" + std::to_string(index.size_in_bytes()));
+            output_message("Height:\t" + std::to_string(index.height()));
         }
 
         void save_model(const std::string& filename) {

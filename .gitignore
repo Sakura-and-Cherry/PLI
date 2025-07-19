@@ -159,4 +159,9 @@ dataset
 .build/
 .github/
 
+build/
+.out
+log/
+.log
+log
 

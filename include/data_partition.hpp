@@ -28,15 +28,9 @@ struct Block {
         long double gap_avg = sum / (n - 1);
         // 计算无偏方差
         long double gap_var = (var_sum - (n - 1) * gap_avg * gap_avg) / (n - 2); // Bessel's correction 方差用无偏估计
-        // if (gap_avg == 0 || gap_var <= 0) {
-        //     epsilon = 1;
-        //     cost += 0;
-        //     return;
-        // }
-
         // 计算epsilon
         epsilon = static_cast<size_t>(std::ceil(std::sqrt(gap_var) / gap_avg * std::sqrt(lambda_coefficient * n))); // 采用向上取整得到epsilon
-        epsilon = epsilon > 0 ? epsilon : 1; // 确保epsilon至少为1
+        epsilon = epsilon > 1 ? epsilon : 1; // 确保epsilon至少为1
         long double cov = n * gap_var / (gap_avg * gap_avg * epsilon * epsilon) / scale_factor;
         cost += lambda * cov + (1 - lambda) * log(epsilon); // 更新成本
     }
@@ -47,7 +41,7 @@ public:
     std::vector<Page> pages;
     std::vector<Block> blocks;
     std::string partition_type = "greedy"; // false表示DP分区，true表示Greedy分区
-    long double dp_cost = 0; // DP分区的总成本
+    long double optimal_cost = 0; // DP分区的总成本
     long double greedy_cost = 0; // Greedy分区的总成本
     long double uniform_cost = 0; // 均匀分区的总成本
     long double random_cost = 0; // 随机分区的总成本
@@ -91,7 +85,7 @@ public:
 
     // DP求最优分区
     void optimal_partition() {
-        dp_cost = 0;
+        optimal_cost = 0;
         partition_type = "optimal";
         size_t n = pages.size();
         if (pages.empty()) return;
@@ -115,9 +109,10 @@ public:
             if (start == -1) break; // 如果没有前驱，结束回溯
             // 将当前分区添加到block中
             // 将page中的值提取出来
-            blocks.emplace_back(gap_prefix_sum, gap_prefix_squares, pages[start].start_idx, pages[idx - 1].end_idx, dp_cost);
+            blocks.emplace_back(gap_prefix_sum, gap_prefix_squares, pages[start].start_idx, pages[idx - 1].end_idx, optimal_cost);
             idx = start;
         }
+        std::reverse(blocks.begin(), blocks.end());
     }
 
     // Greedy求次优分区
@@ -152,7 +147,7 @@ public:
     // 均匀划分，每次取1024个page当一个block
     void uniform_partition() {
         partition_type = "uniform";
-        uniform_cost = 0; // 可以复用 dp_cost 存储总成本
+        uniform_cost = 0; // 可以复用 optimal_cost 存储总成本
         blocks.clear();
 
         const size_t block_page_size = 1024; // 每个 Block 包含的 Page 数量
@@ -173,7 +168,7 @@ public:
     // 每次随机取一定数量的page化为一个block
     void random_partition() {
         partition_type = "random";
-        random_cost = 0; // 可以复用 dp_cost 存储总成本
+        random_cost = 0; // 可以复用 optimal_cost 存储总成本
         blocks.clear();
 
         size_t n_pages = pages.size();
@@ -220,11 +215,11 @@ public:
         long double D_j = end_idx - start_idx;
 
         long double epsilon = static_cast<size_t>(std::ceil(std::sqrt(sigma_j_squared) / mu_j * std::sqrt(lambda_coefficient * D_j))); // 采用向上取整得到epsilon
-        epsilon = epsilon > 0 ? epsilon : 1; // 确保epsilon至少为1
-        long double cov = D_j * sigma_j_squared / (mu_j * mu_j * epsilon * epsilon) / scale_factor; // 计算协方差
+        epsilon = epsilon > 1 ? epsilon : 1; // 确保epsilon至少为1
+        long double cov = (D_j * sigma_j_squared / (mu_j * mu_j * epsilon * epsilon)) / scale_factor; // 计算协方差
 
         if (epsilon <= 0 || cov <= 0) {
-            std::cerr << "Error: start_idx: " << start_idx << " end_idx: " << end_idx << " gap_avg: " << mu_j << " gap_var: " << sigma_j_squared << std::endl;
+            std::cerr << "Error: start_idx: " << start_idx << " end_idx: " << end_idx << " gap_avg: " << mu_j << " gap_var: " << sigma_j_squared << " epsilon: " << epsilon << " cov: " << cov << "scale factor: " << scale_factor << std::endl;
             return 0.0; // 防止除以零或负数
         }
 
@@ -257,7 +252,7 @@ public:
 
             long double D_j = end_idx - start_idx;
             long double epsilon = std::ceil(std::sqrt(sigma_j_squared) / mu_j * std::sqrt(lambda_coefficient * D_j));
-            epsilon = epsilon > 0 ? epsilon : 1;
+            epsilon = epsilon > 1 ? epsilon : 1;
 
             long double cov = D_j * sigma_j_squared / (mu_j * mu_j * epsilon * epsilon);
 
@@ -270,13 +265,19 @@ public:
             return;
         }
 
-        // 计算平均值和中位数
+        // 计算采样均值
         long double avg_epsilon = std::accumulate(epsilons.begin(), epsilons.end(), 0.0L) / epsilons.size();
+        avg_epsilon = std::max(avg_epsilon, 1.0L); // 确保平均epsilon至少为1
         long double avg_cov = std::accumulate(covs.begin(), covs.end(), 0.0L) / covs.size();
 
-        // scale_factor = std::pow(10, std::log10(avg_cov) - std::log10(avg_epsilon));
-        scale_factor = std::pow(10, static_cast<int64_t>(avg_cov / 10) - static_cast<int64_t>(avg_epsilon / 10));
-        std::cout << "Scale Factor:\t" << scale_factor << std::endl;
+        // int multiplier = 0;
+        int miu_epsilon = static_cast<int>(std::floor(std::log10(avg_epsilon)));
+        int miu_cov = static_cast<int>(std::floor(std::log10(avg_cov)));
+
+        scale_factor = std::pow(10, miu_cov - miu_epsilon);
+        // std::cout << "Scale Factor:\t" << scale_factor << std::endl;
+        std::cerr << "Avg Epsilon:\t" << avg_epsilon << ", Avg Cov:\t" << avg_cov << std::endl;
+        output_message("Scale Factor:\t" + std::to_string(scale_factor));
     }
 
     void summarize() const {
@@ -284,9 +285,15 @@ public:
 
         output_message("Total Blocks:\t" + std::to_string(blocks.size()));
         if (partition_type == "optimal") {
-            output_message("Optimal Cost:\t" + std::to_string(dp_cost));
+            output_message("Optimal Cost:\t" + std::to_string(optimal_cost));
+            for (const auto &block : blocks) {
+                output_message("Block: [" + std::to_string(block.start_idx) + ", " + std::to_string(block.end_idx) + "), Epsilon: " + std::to_string(block.epsilon));
+            }
         } else if (partition_type == "greedy") {
             output_message("Greedy Cost:\t" + std::to_string(greedy_cost));
+            // for (const auto &block : blocks) {
+            //     output_message("Block: [" + std::to_string(block.start_idx) + ", " + std::to_string(block.end_idx) + "), Epsilon: " + std::to_string(block.epsilon));
+            // }
         } else if (partition_type == "random") {
             output_message("Random Cost:\t" + std::to_string(random_cost));
         } else if (partition_type == "uniform") {

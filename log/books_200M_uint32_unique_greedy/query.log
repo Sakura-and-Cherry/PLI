@@ -1,3 +1,14 @@
 ————Partition Type:	greedy	Lambda:	0.000500	——————
-Avg 100K Query Time:	25726614.800000
-————Partition Type:	greedy	Lambda:	0.000600	——————
+Avg 100K Query Time:	1144456.400000
+————Partition Type:	greedy	Lambda:	0.000700	——————
+Avg 100K Query Time:	57021.800000
+————Partition Type:	greedy	Lambda:	0.000750	——————
+Avg 100K Query Time:	35578.200000
+————Partition Type:	greedy	Lambda:	0.000775	——————
+Avg 100K Query Time:	34755.500000
+————Partition Type:	greedy	Lambda:	0.000800	——————
+Avg 100K Query Time:	30048.600000
+————Partition Type:	greedy	Lambda:	0.000850	——————
+Avg 100K Query Time:	24072.600000
+————Partition Type:	greedy	Lambda:	0.000900	——————
+Avg 100K Query Time:	26244.000000

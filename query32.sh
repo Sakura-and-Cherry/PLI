@@ -4,17 +4,17 @@ output_path="/mnt/Database/Datasets/SOSD/pgm/"
 
 mkdir -p $output_path
 
-partition_type="greedy"
+partition_type="uniform"
 
 for dataset in "books_200M_uint32"
   do
-    for lambda in "0.0005" "0.0006" "0.0007" "0.0008" "0.0009" "0.001"
+    log_path="./log/$dataset""_unique_""$partition_type/query.log"
+    mkdir -p "./log/$dataset""_unique_""$partition_type"
+    rm -f $log_path
+    for lambda in "0.0005" "0.0007" "0.00075" "0.000775" "0.0008" "0.00085" "0.0009"
       do
       dataset_name=$file_path$dataset"_unique"
       index_name=$output_path$dataset"_unique_"$partition_type\_$lambda".idx"
-      log_path="./log/$dataset""_unique_""$partition_type/query.log"
-      mkdir -p "./log/$dataset""_unique_""$partition_type"
-      touch $log_path
       echo "Querying index: $index_name lambda: $lambda"
       ./build/pgm_query_uint32 $dataset_name $index_name $lambda $partition_type $log_path
       echo " "
