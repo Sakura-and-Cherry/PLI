@@ -161,7 +161,8 @@ dataset
 
 build/
 .out
-log/
-.log
 log
-
+log/
+*.log
+.idea/
+.idea
