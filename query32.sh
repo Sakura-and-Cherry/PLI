@@ -1,6 +1,7 @@
+#!/bin/bash
+file_path="data/SOSD/"
+output_path="data/SOSD/pgm/"
 
-file_path="/mnt/Database/Datasets/SOSD/"
-output_path="/mnt/Database/Datasets/SOSD/pgm/"
 
 mkdir -p $output_path
 

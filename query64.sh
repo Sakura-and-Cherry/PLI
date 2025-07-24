@@ -1,6 +1,8 @@
+#!/bin/bash
+file_path="/home/andy/Projects/Dataset/SOSD"
+output_path="/home/andy/Projects/Dataset/SOSD/pgm"
 
-file_path="/mnt/Database/Datasets/SOSD/"
-output_path="/mnt/Database/Datasets/SOSD/pgm/"
+
 
 mkdir -p $output_path
 

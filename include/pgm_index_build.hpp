@@ -31,6 +31,7 @@ namespace pgm_sequence {
             // 开始计时
 
             DataPartition* partitioner = new DataPartition(dataset);
+            auto start = std::chrono::high_resolution_clock::now();
             if (partition_type == "greedy")
                 partitioner -> greedy_partition();
             else if (partition_type == "optimal")
@@ -42,11 +43,14 @@ namespace pgm_sequence {
             else {
                 throw std::invalid_argument("Invalid partition type");
             }
-            partitioner -> summarize();
-            auto start = std::chrono::high_resolution_clock::now();
-            index = pgm::PGMIndex<EpsilonRecursive, Floating>(dataset, partitioner->blocks);
             auto end = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+            output_message("Partition Time:\t" + std::to_string(duration.count()));
+            partitioner -> summarize();
+            start = std::chrono::high_resolution_clock::now();
+            index = pgm::PGMIndex<EpsilonRecursive, Floating>(dataset, partitioner->blocks);
+            end = std::chrono::high_resolution_clock::now();
+            duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
             output_message("Build Time:\t" + std::to_string(duration.count()));
         }
 

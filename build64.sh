@@ -1,5 +1,8 @@
-file_path="/mnt/Database/Datasets/SOSD/"
-output_path="/mnt/Database/Datasets/SOSD/pgm/"
+#!/bin/bash
+file_path="/home/andy/Projects/Dataset/SOSD/"
+output_path="/home/andy/Projects/Dataset/SOSD/pgm/"
+
+
 
 mkdir -p $output_path
 # Build the PGM index for each dataset
@@ -24,13 +27,13 @@ mkdir -p $output_path
 # done
 
 #"books_800M_uint64" greedy
-partition_type="greedy"
-for dataset in "books_800M_uint64"
+partition_type="optimal"
+for dataset in "fb_10M_uint64"
 do
   log_path="./log/$dataset""_unique_""$partition_type/build.log"
   mkdir -p "./log/$dataset""_unique_""$partition_type"
   rm -f $log_path
-   for lambda in "0.0004" "0.0005" "0.00055" "0.0006" "0.000625" "0.00065" "0.0007"
+   for lambda in "0.1" "0.2" "0.5" "0.7" "0.8" "0.9"
    do
     dataset_name=$file_path$dataset"_unique"
     index_name=$output_path$dataset"_unique_"$partition_type\_$lambda".idx"

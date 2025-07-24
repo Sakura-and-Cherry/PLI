@@ -1,11 +1,41 @@
 #include <iostream>
 #include <vector>
+#include <fstream>
+#include <string>
+
+/**
+ * @brief Translate the data from the file to the vector
+ *
+ * @param filename
+ * @return std::vector<K>
+ */
+template<typename K>
+std::vector<K> load_data(std::string FILE_NAME)
+{
+
+    /* Open file. */
+    std::ifstream in(FILE_NAME, std::ios::binary);
+    if (!in.is_open())
+        exit(EXIT_FAILURE);
+
+    /* Read number of keys. */
+    K n_keys;
+    in.read(reinterpret_cast<char *>(&n_keys), sizeof(K));
+
+    /* Initialize vector. */
+    std::vector<K> data;
+    data.resize(n_keys);
+
+    /* Read keys. */
+    in.read(reinterpret_cast<char *>(data.data()), n_keys * sizeof(K));
+    in.close();
+
+    return data;
+}
+
 
 int main() {
-    int start_idx = 0, end_idx = 10; // 假设这是划分的起始和结束索引
-    std::vector<int> data = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
-    std::vector<int> block_data(data.begin() + start_idx, data.begin() + end_idx);
-    for (const auto& val : block_data) {
-        std::cout << val << " ";
-    }
+    std::vector<u_int64_t> data = load_data<u_int64_t>("./data/SOSD/books_1M_uint64.bin");
+    printf("Loaded %zu keys from the file.\n", data.size());
+    return 0;
 }
