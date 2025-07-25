@@ -33,7 +33,7 @@ do
   log_path="./log/$dataset""_unique_""$partition_type/build.log"
   mkdir -p "./log/$dataset""_unique_""$partition_type"
   rm -f $log_path
-   for lambda in "0.1" "0.2" "0.5" "0.7" "0.8" "0.9"
+   for lambda in "0.01" "0.02" "0.03" "0.04" "0.05" "0.06" "0.07"
    do
     dataset_name=$file_path$dataset"_unique"
     index_name=$output_path$dataset"_unique_"$partition_type\_$lambda".idx"

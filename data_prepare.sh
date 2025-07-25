@@ -13,7 +13,7 @@ output_path="/home/andy/Projects/Dataset/SOSD/pgm/"
 #   ./build/data_prepare_uint32 $unique_dataset_name t
 # done
 
-for dataset in "fb_200M_uint64"
+for dataset in "osm_10M_uint64"
 do
   dataset_name=$file_path$dataset
   unique_dataset_name=$file_path$dataset"_unique"

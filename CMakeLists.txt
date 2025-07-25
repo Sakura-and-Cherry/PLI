@@ -3,7 +3,7 @@ project(PGM)
 
 
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mbmi2")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -w") # Disable all warnings
 set(CMAKE_CXX_STANDARD 17)
 

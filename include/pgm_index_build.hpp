@@ -40,6 +40,10 @@ namespace pgm_sequence {
                 partitioner -> random_partition();
             else if (partition_type == "uniform")
                 partitioner -> uniform_partition();
+            else if (partition_type == "learned"){
+                // read_partition(input_basename, partitioner);
+                // partitioner -> partition_type = "learned";
+            }
             else {
                 throw std::invalid_argument("Invalid partition type");
             }
